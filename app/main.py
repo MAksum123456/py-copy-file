@@ -6,12 +6,11 @@ def copy_file(command: str) -> None:
         print("Incorrect command format")
         return
 
-    cp, source_file, destination_file = command.split()
+    perform_copy, source_file, destination_file = command.split()
 
     if source_file == destination_file:
-        print(f"Fail {source_file} not found")
         return
-    if cp != "cp":
+    if perform_copy != "cp":
         print("Error: Invalid command. Only 'cp' is allowed.")
         return
 
@@ -20,8 +19,9 @@ def copy_file(command: str) -> None:
               open(destination_file, "w") as copy_file):
             for line in main_file:
                 copy_file.write(line)
-    except FileNotFoundError as err:
-        print(err)
 
-    except Exception as err:
-        print(err)
+    except FileNotFoundError:
+        print(f"Error {source_file} not found")
+
+    except Exception as e:
+        print(e)
